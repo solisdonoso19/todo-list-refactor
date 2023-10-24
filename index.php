@@ -4,25 +4,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Checklist Tracker</title>
 </head>
 
 <body>
-    <?php
-    require_once('class/todo.php');
-    $todo = new todo();
-    $list = $todo->get();
-    foreach ($list as $valor) {
-        echo $valor['id'] . "<br>";
-        echo $valor['titulo'] . "<br>";
-        echo $valor['descripcion'] . "<br>";
-        echo $valor['estado'] . "<br>";
-        echo $valor['fecha'] . "<br>";
-        echo $valor['editado'] . "<br>";
-        echo $valor['responsable'] . "<br>";
-        echo $valor['tipo_tarea'] . "<br>";
-    }
-    ?>
+<body>
+
+    <!-- Header -->
+    <header>
+        <!-- Icono de Menú -->
+        <div class="menu-icon" onclick="toggleDrawer()">
+            &#9776;
+        </div>
+        <!-- Logo y Titulo del App -->
+        <img
+            src="./assets//logo.png"
+            alt="CheckList Tracker"
+            class="logo"
+        >
+        <h1>CheckList Manager</h1>
+    </header>
+
+    <!-- Drawer (contenido oculto) -->
+    <div class="overlay" onclick="closeDrawer()"></div>
+    <div class="drawer" id="drawer">
+        <a href="#" class="drawer-item" onclick="handleDrawerItemClick(event)">Opción 1</a>
+        <a href="#" class="drawer-item" onclick="handleDrawerItemClick(event)">Opción 2</a>
+        <a href="#" class="drawer-item" onclick="handleDrawerItemClick(event)">Opción 3</a>
+    </div>
+
+    <!-- Contenido del Checklist -->
+    <div class="container">
+        <div class="columns">
+            <!-- Por Hacer -->
+            <div class="column">
+                <div class="add-task-button" onclick="showTaskForm()">
+                    <h3>Por Hacer</h3>
+                    <div class="add-sign">
+                        &#43;
+                    </div>
+                </div>
+                <ul id="todo-tasks">
+                    <!-- Contenido se crea a partir del modal -->
+                </ul>
+            </div>
+            <!-- En Progreso -->
+            <div class="column">
+                <div class="title-margin" onclick="showTaskForm()">
+                    <h3>En Progreso</h3>
+                </div>
+                <ul id="in-progress-tasks">
+                    <!-- Contenido se crea a partir del modal -->
+                </ul>
+            </div>
+            <!-- Terminadas -->
+            <div class="column">
+                <div class="title-margin" onclick="showTaskForm()">
+                    <h3>Terminadas</h3>
+                </div>
+                <ul id="completed-tasks">
+                    <!-- Contenido se crea a partir del modal -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal-overlay" onclick="hideTaskModal()"></div>
+        <div class="modal" id="task-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Contenido del modal -->
+                    <h2>Agregar Nueva Tarea</h2>
+                    <span class="close-modal" onclick="hideTaskModal()">&times;</span> <!-- Icono para cerrar el modal -->
+                </div>
+                <form id="task-form">
+                    <label for="task-title">Título:</label>
+                    <input type="text" id="task-title" required><br>
+
+                    <label for="task-description">Descripción:</label>
+                    <textarea id="task-description" required></textarea><br>
+
+                    <label for="task-status">Estado:</label>
+                    <select id="task-status" required>
+                        <option value="Por Hacer">Por Hacer</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Terminadas">Terminadas</option>
+                        <!-- Agrega más opciones según sea necesario -->
+                    </select><br>
+
+                    <label for="task-due-date">Fecha de Compromiso:</label>
+                    <input type="date" id="task-due-date" required><br>
+
+                    <label for="task-edited">Editado:</label>
+                    <input type="checkbox" id="task-edited" disabled><br>
+
+                    <label for="task-assignee">Responsable:</label>
+                    <input type="text" id="task-assignee" required><br>
+
+                    <label for="task-type">Tipo de Tarea:</label>
+                    <select id="task-type" required>
+                        <!-- AÑADIRA SELECCIONAR TAREA COMO TEXTO INICIAL -->
+                        <option value="tipo1">P1 - Urgente</option>
+                        <option value="tipo2">P2 - Moderado</option>
+                        <option value="tipo3">P3 - No Urgente</option>
+                        <!-- Agrega más opciones según sea necesario -->
+                    </select><br>
+
+                    <button type="submit">Agregar Tarea</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- <div class="additional-cards">
+            <div class="card">
+                <h2>Reporte</h2>
+                <select id="report-type">
+                    <option value="tipo">Por Tipo de Tarea</option>
+                    <option value="estado">Por Estado</option>
+                    <option value="dia">Por Día</option>
+                    <option value="semana">Por Semana</option>
+                    <option value="mes">Por Mes</option>
+                    <option value="anio">Por Año</option>
+                </select>
+                <button id="generate-report">Generar Reporte</button>
+                <ul id="report-results"></ul>
+            </div>
+        </div> -->
+
+    </div>
+
+    <script src="./js/script.js"></script>
+</body>
 </body>
 
 </html>
