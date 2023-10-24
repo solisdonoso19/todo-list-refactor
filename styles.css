@@ -1,0 +1,191 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* DRAWER */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    z-index: 1; /* Para asegurar que esté sobre el resto del contenido */
+}
+
+.drawer {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    left: -250px;
+    top: 0;
+    background: #333;
+    padding-top: 20px;
+    transition: left 0.3s ease; /* Agregado para la transición suave */
+}
+
+.drawer-item {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+    transition: background 0.3s ease;
+}
+
+.drawer-item:hover {
+    background: #555;
+}
+
+/* HEADER */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon {
+    cursor: pointer;
+}
+
+.logo {
+    width: 3%;
+    margin-left: 3.5%;
+    padding-right: 0.5%;
+}
+
+
+/* CONTENT */
+.container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.columns {
+    display: flex;
+    justify-content: space-around;
+    margin-left: -25%;
+    margin-top: 1%;
+}
+
+.column {
+    width: 400px;
+    margin: 0 10px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+/* Añade estos estilos para las columnas y tarjetas dinámicas */
+.columns .column ul {
+    padding: 0;
+    list-style: none;
+}
+
+.columns .column .card {
+    background: #e7e2e2;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* CARD STYLE */
+.card {
+    background: #e7e2e2;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: justify; 
+    max-height: 200px; /* Establece la altura máxima que puede tener la tarjeta */
+    overflow: auto;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+#task-description {
+    overflow-wrap: break-word; /* Permite que las palabras se envuelvan cuando alcanzan el borde del elemento */
+    width: 100%;
+}
+
+/* ADD BUTTON */
+.add-task-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
+    margin-bottom: -10px;
+}
+
+.add-sign {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.title-margin { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px;
+    margin-bottom: -10px;
+}
+
+/* MODAL */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+.close-modal {
+    top: 10px;
+    right: 10px;
+    font-size: 40px;
+    cursor: pointer;
+}
