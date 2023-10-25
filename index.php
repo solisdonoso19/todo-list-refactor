@@ -48,6 +48,28 @@
                 });
         }
     </script>
+
+    <script>
+        //funcion con ajax
+        //funcion para evitar que cambie de direccion de screen
+        function openEdit(id,
+            titulo,
+            descripcion,
+            estado,
+            fecha,
+            editado,
+            responsable,
+            tipo_tarea) {
+            openEditModal(id,
+                titulo,
+                descripcion,
+                estado,
+                fecha,
+                editado,
+                responsable,
+                tipo_tarea)
+        }
+    </script>
 </head>
 
 <body>
@@ -99,12 +121,14 @@
                             $editado = $valor['editado'];
                             $responsable = $valor['responsable'];
                             $tipo_tarea = $valor['tipo_tarea'];
+
+
                             echo "<div class='card'>";
                             if ($editado) {
                                 echo "<div class='flag'></div>";
                             }
                             echo "
-                                <img class='edit' src='./assets/edit.png' alt='editar'>
+                                <img onclick='openEdit(\"$id\",\"$titulo\",\"$descripcion\",\"$estado\",\"$fecha\",\"$editado\",\"$responsable\",\"$tipo_tarea\")' class='edit' src='./assets/edit.png' alt='editar'>
                                 <img onclick='deleteRegister($id)' class='delete' src='./assets/delete.png' alt='eliminar'>
                                 <p>
                                 <strong>Título:</strong> $titulo <br>
@@ -114,7 +138,7 @@
                                 <strong>Responsable:</strong> $responsable <br>
                                 <strong>Tipo de Tarea:</strong> $tipo_tarea </p>
                             </div>";
-                        };
+                        }
                         ?>
                     </ul>
                 </div>
@@ -139,7 +163,7 @@
                             $responsable = $valor['responsable'];
                             $tipo_tarea = $valor['tipo_tarea'];
                             echo "<div class='card'>
-                                <img class='edit' src='./assets/edit.png' alt='editar'>
+                                <img onclick='openEdit(\"$id\",\"$titulo\",\"$descripcion\",\"$estado\",\"$fecha\",\"$editado\",\"$responsable\",\"$tipo_tarea\")' class='edit' src='./assets/edit.png' alt='editar'>
                                 <img onclick='deleteRegister($id)' class='delete' src='./assets/delete.png' alt='eliminar'>
                                 <p>
                                 <strong>Título:</strong> $titulo <br>
@@ -174,7 +198,7 @@
                             $responsable = $valor['responsable'];
                             $tipo_tarea = $valor['tipo_tarea'];
                             echo "<div class='card'>
-                                <img class='edit' src='./assets/edit.png' alt='editar'>
+                                <img onclick='openEdit(\"$id\",\"$titulo\",\"$descripcion\",\"$estado\",\"$fecha\",\"$editado\",\"$responsable\",\"$tipo_tarea\")' class='edit' src='./assets/edit.png' alt='editar'>
                                 <img onclick='deleteRegister($id)' class='delete' src='./assets/delete.png' alt='eliminar'>
                                 <p>
                                 <strong>Título:</strong> $titulo <br>
