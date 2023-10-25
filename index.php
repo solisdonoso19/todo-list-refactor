@@ -19,7 +19,7 @@
         </div>
         <!-- Logo y Titulo del App -->
         <img
-            src="./assets//logo.png"
+            src="./assets/logo.png"
             alt="CheckList Tracker"
             class="logo"
         >
@@ -75,7 +75,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <!-- Contenido del modal -->
-                    <h2>Agregar Nueva Tarea</h2>
+                    <h2 id="modal-title">Agregar Nueva Tarea</h2>
                     <span class="close-modal" onclick="hideTaskModal()">&times;</span> <!-- Icono para cerrar el modal -->
                 </div>
                 <form id="task-form">
@@ -105,13 +105,14 @@
                     <label for="task-type">Tipo de Tarea:</label>
                     <select id="task-type" required>
                         <!-- AÑADIRA SELECCIONAR TAREA COMO TEXTO INICIAL -->
-                        <option value="tipo1">P1 - Urgente</option>
-                        <option value="tipo2">P2 - Moderado</option>
-                        <option value="tipo3">P3 - No Urgente</option>
+                        <option value="P1 - Urgente">P1 - Urgente</option>
+                        <option value="P2 - Moderado">P2 - Moderado</option>
+                        <option value="P3 - No Urgente">P3 - No Urgente</option>
                         <!-- Agrega más opciones según sea necesario -->
                     </select><br>
 
-                    <button type="submit">Agregar Tarea</button>
+                    <button type="submit" id="task-submit-button">Agregar Tarea</button>
+                    <button onclick="hideTaskModal()">Cancelar</button>
                 </form>
             </div>
         </div>
@@ -135,7 +136,6 @@
     </div>
 
     <script src="./js/script.js"></script>
-</body>
 </body>
 
 </html>
