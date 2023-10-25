@@ -17,9 +17,9 @@ class ModeloBD
         try {
             $this->_DB     = new
                 mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
-            echo '<script type="text/javascript">alert("DATABASE CONNECTED!");</script>';
+            // echo '<script type="text/javascript">alert("DATABASE CONNECTED!");</script>';
         } catch (\Throwable $th) {
-            echo '<script type="text/javascript">alert("ERROR DATABASE CONNECTION");</script>';
+            // echo '<script type="text/javascript">alert("ERROR DATABASE CONNECTION");</script>';
         }
     }
 }
