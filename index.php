@@ -6,6 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Checklist Tracker</title>
+
+    <script>
+    //funcion con ajax
+    //funcion para evitar que cambie de direccion de screen
+        function submitForm() {
+            const formData = new FormData(document.getElementById('task-form')); //se crea para poder manejar
+            fetch('class/procesaform.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Tarea creada correctamente"+data); // Muestra el mensaje de respuesta del servidor
+                hideTaskModal(); // Oculta el modal después de enviar el formulario
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -78,15 +98,16 @@
                     <h2 id="modal-title">Agregar Nueva Tarea</h2>
                     <span class="close-modal" onclick="hideTaskModal()">&times;</span> <!-- Icono para cerrar el modal -->
                 </div>
-                <form id="task-form">
+                <!-- form -->
+                <form id="task-form" method="POST" action="class/procesaform.php" onsubmit="submitForm(); return false;">
                     <label for="task-title">Título:</label>
-                    <input type="text" id="task-title" required><br>
+                    <input type="text" id="task-title" name="task-title" required><br>
 
                     <label for="task-description">Descripción:</label>
-                    <textarea id="task-description" required></textarea><br>
+                    <textarea id="task-description" name="task-description" required></textarea><br>
 
                     <label for="task-status">Estado:</label>
-                    <select id="task-status" required>
+                    <select id="task-status" name="task-status" required>
                         <option value="Por Hacer">Por Hacer</option>
                         <option value="En Progreso">En Progreso</option>
                         <option value="Terminadas">Terminadas</option>
@@ -94,16 +115,16 @@
                     </select><br>
 
                     <label for="task-due-date">Fecha de Compromiso:</label>
-                    <input type="date" id="task-due-date" required><br>
+                    <input type="date" id="task-due-date" name="task-due-date" required><br>
 
                     <label for="task-edited">Editado:</label>
-                    <input type="checkbox" id="task-edited" disabled><br>
+                    <input type="checkbox" id="task-edited" name="task-edited" disabled><br>
 
                     <label for="task-assignee">Responsable:</label>
-                    <input type="text" id="task-assignee" required><br>
+                    <input type="text" id="task-assignee" name="task-assignee" required><br>
 
                     <label for="task-type">Tipo de Tarea:</label>
-                    <select id="task-type" required>
+                    <select id="task-type" name="task-type" required>
                         <!-- AÑADIRA SELECCIONAR TAREA COMO TEXTO INICIAL -->
                         <option value="P1 - Urgente">P1 - Urgente</option>
                         <option value="P2 - Moderado">P2 - Moderado</option>

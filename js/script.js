@@ -154,7 +154,7 @@ function getTargetTaskList(status) {
 
 // Asocia la función createTask al evento submit del formulario
 taskForm.addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe
+    //event.preventDefault(); // Evita que el formulario se envíe
     createTask();
 });
 
@@ -213,3 +213,43 @@ todoTasksList.addEventListener('click', function(event) {
         taskCard.remove();
     }
 });
+
+
+// función para cargar y mostrar las tarjetas
+// function cargarRegistros() {
+//     try {
+//         console.log("Cargar registros llamado");
+//         alert("Este es un mensaje de prueba de JavaScript");
+    
+//         fetch('class/get_tasks.php')
+//         .then(response => response.json())
+//         .then(data => {
+//             const todoTasksList = document.getElementById('todo-tasks');
+            
+//             data.forEach(record => {
+//                 const newCard = document.createElement('div');
+//                 newCard.className = 'card';
+//                 newCard.innerHTML = `
+//                     <p><strong>ID:</strong> ${record.id}<br>
+//                     <p><strong>Título:</strong> ${record.titulo}<br>
+//                     <strong>Descripción:</strong> ${record.descripcion}<br>
+//                     <strong>Estado:</strong> ${record.estado}<br>
+//                     <strong>Fecha de Compromiso:</strong> ${record.fecha}<br>
+//                     <p><strong>Editado:</strong> ${record.editado}<br>
+//                     <strong>Responsable:</strong> ${record.responsable}<br>
+//                     <strong>Tipo de Tarea:</strong> ${record.tipo_tarea}</p>
+//                 `;
+//                 todoTasksList.appendChild(newCard);
+//             });
+//         })
+//         .catch(error => {
+//             // alert ('Error:', error);
+//             console.error('Error 1:', error);
+//         });
+//     } catch (error) {
+//         console.error('Error try:', error);
+//     }
+// }
+
+// // Llama a esta función cuando la página se carga
+// window.addEventListener('load', cargarRegistros);
