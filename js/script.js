@@ -11,6 +11,7 @@ const modalTitle = document.getElementById("modal-title");
 let isEditing = false; // Variable para rastrear si se está editando
 let taskIdCounter = 1; // Un contador para asignar IDs únicos a las tarjetas
 let currentEditedCard = null; // Variable para guardar la referencia a la tarjeta en modo de edición
+let editID = 0;
 const taskTitles = {}; // Objeto para almacenar los títulos de las tarjetas
 
 // ************************************************************
@@ -47,6 +48,14 @@ function hideTaskModal() {
 }
 
 // addSign.addEventListener('click', showTaskModal);
+
+const isEdit = () => {
+  return isEditing;
+};
+
+const returnEdit = () => {
+  return editID;
+};
 
 addSign.addEventListener("click", function () {
   isEditing = false; // Marca que no estamos en modo de edición
@@ -153,10 +162,10 @@ function getTargetTaskList(status) {
 }
 
 // Asocia la función createTask al evento submit del formulario
-taskForm.addEventListener("submit", function (event) {
-  //event.preventDefault(); // Evita que el formulario se envíe
-  createTask();
-});
+// taskForm.addEventListener("submit", function (event) {
+//   //event.preventDefault(); // Evita que el formulario se envíe
+//   createTask();
+// });
 
 // ************************************************************
 // ********************** EDICION *****************************
@@ -184,10 +193,11 @@ function openEditModal(
   const taskDueDate = fecha.split(" ")[0];
   const taskIsEdited = editado;
   const taskAssignee = responsable;
-
+  editID = id;
   const taskType = taskCard;
 
   // Llena el formulario de edición con los valores de la tarjeta
+  document.getElementById("task-id").value = id;
   document.getElementById("task-title").value = taskTitle;
   document.getElementById("task-description").value = taskDescription;
   document.getElementById("task-status").value = taskStatus;

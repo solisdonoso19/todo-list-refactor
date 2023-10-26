@@ -51,6 +51,22 @@ class todo extends ModeloBD
         }
     }
 
+    public function edit($taskID, $taskTitle, $taskDescription, $taskStatus, $taskDueDate, $taskAssignee, $taskType)
+    {
+        //echo "Entro a insert_new()";
+        $query = "UPDATE checklist
+                SET titulo = '$taskTitle', descripcion = '$taskDescription', estado = '$taskStatus', fecha = '$taskDueDate', responsable = '$taskAssignee', tipo_tarea = '$taskType', editado = 1
+                WHERE id = $taskID";
+        $consulta = $this->_DB->query($query);
+        // Ejecuta la consulta
+        if ($consulta) {
+            return true;
+        } else {
+            echo "Error: " . $query . "<br>" . $this->_DB->error;
+            return false; // Indica que hubo un error al ejecutar la consulta
+        }
+    }
+
     public function insert_new($taskTitle, $taskDescription, $taskStatus, $taskDueDate, $taskAssignee, $taskType)
     {
         //echo "Entro a insert_new()";

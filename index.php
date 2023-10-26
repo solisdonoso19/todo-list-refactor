@@ -12,19 +12,38 @@
         //funcion para evitar que cambie de direccion de screen
         function submitForm() {
             const formData = new FormData(document.getElementById('task-form')); //se crea para poder manejar
-            console.log(formData)
-            fetch('class/procesaform.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(data => {
-                    alert("Tarea creada correctamente " + data); // Muestra el mensaje de respuesta del servidor
-                    hideTaskModal(); // Oculta el modal después de enviar el formulario
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            console.log(isEdit())
+            if (isEdit()) {
+                fetch('class/edit.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        alert("Tarea Edito correctamente " + data); // Muestra el mensaje de respuesta del servidor
+                        hideTaskModal(); // Oculta el modal después de enviar el formulario  
+                        location.reload()
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+
+                fetch('class/procesaform.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        alert("Tarea creada correctamente " + data); // Muestra el mensaje de respuesta del servidor
+                        hideTaskModal(); // Oculta el modal después de enviar el formulario  
+                        location.reload()
+
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
         }
     </script>
 
@@ -162,7 +181,11 @@
                             $editado = $valor['editado'];
                             $responsable = $valor['responsable'];
                             $tipo_tarea = $valor['tipo_tarea'];
-                            echo "<div class='card'>
+                            echo "<div class='card'>";
+                            if ($editado) {
+                                echo "<div class='flag'></div>";
+                            }
+                            echo "
                                 <img onclick='openEdit(\"$id\",\"$titulo\",\"$descripcion\",\"$estado\",\"$fecha\",\"$editado\",\"$responsable\",\"$tipo_tarea\")' class='edit' src='./assets/edit.png' alt='editar'>
                                 <img onclick='deleteRegister($id)' class='delete' src='./assets/delete.png' alt='eliminar'>
                                 <p>
@@ -197,7 +220,11 @@
                             $editado = $valor['editado'];
                             $responsable = $valor['responsable'];
                             $tipo_tarea = $valor['tipo_tarea'];
-                            echo "<div class='card'>
+                            echo "<div class='card'>";
+                            if ($editado) {
+                                echo "<div class='flag'></div>";
+                            }
+                            echo "
                                 <img onclick='openEdit(\"$id\",\"$titulo\",\"$descripcion\",\"$estado\",\"$fecha\",\"$editado\",\"$responsable\",\"$tipo_tarea\")' class='edit' src='./assets/edit.png' alt='editar'>
                                 <img onclick='deleteRegister($id)' class='delete' src='./assets/delete.png' alt='eliminar'>
                                 <p>
@@ -225,6 +252,8 @@
                     </div>
                     <!-- form -->
                     <form id="task-form" method="POST" action="class/procesaform.php" onsubmit="submitForm(); return false;">
+                        <input style="visibility: hidden;" type="text" id="task-id" name="task-id"><br>
+
                         <label for="task-title">Título:</label>
                         <input type="text" id="task-title" name="task-title" required><br>
 
@@ -235,7 +264,7 @@
                         <select id="task-status" name="task-status" required>
                             <option value="Por Hacer">Por Hacer</option>
                             <option value="En Progreso">En Progreso</option>
-                            <option value="Terminadas">Terminadas</option>
+                            <option value="Terminada">Terminadas</option>
                             <!-- Agrega más opciones según sea necesario -->
                         </select><br>
 
