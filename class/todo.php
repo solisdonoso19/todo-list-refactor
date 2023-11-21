@@ -8,91 +8,140 @@ class todo extends ModeloBD
     }
     public function get_por_hacer()
     {
-        $query = "SELECT * FROM checklist WHERE estado='Por Hacer'";
-        $consulta = $this->_DB->query($query);
-        $res = $consulta->fetch_all(MYSQLI_ASSOC);
-        if (!$res) {
-            echo 'ERROR QUERY';
-            return 'ERROR';
-        } else {
-            return $res;
-            $res->close();
-            $this->_DB->close();
-        }
+        $apiUrl = 'http://localhost/api/todo/leer-por-hacer.php';
+        // Realiza la petición GET a la API y obtén la respuesta
+        $response = file_get_contents($apiUrl);
+        // Decodifica la respuesta JSON (si la API devuelve datos en formato JSON)
+        $data =  json_decode($response, true);
+        return json_decode($response, true)['records'];
     }
 
     public function get_en_progreso()
     {
-        $query = "SELECT * FROM checklist WHERE estado='En Progreso'";
-        $consulta = $this->_DB->query($query);
-        $res = $consulta->fetch_all(MYSQLI_ASSOC);
-        if (!$res) {
-            echo 'ERROR QUERY';
-            return 'ERROR';
-        } else {
-            return $res;
-            $res->close();
-            $this->_DB->close();
-        }
+        $apiUrl = 'http://localhost/api/todo/leer-en-progreso.php';
+        // Realiza la petición GET a la API y obtén la respuesta
+        $response = file_get_contents($apiUrl);
+        // Decodifica la respuesta JSON (si la API devuelve datos en formato JSON)
+        $data =  json_decode($response, true);
+        return json_decode($response, true)['records'];
     }
 
     public function get_terminada()
     {
-        $query = "SELECT * FROM checklist WHERE estado='Terminada'";
-        $consulta = $this->_DB->query($query);
-        $res = $consulta->fetch_all(MYSQLI_ASSOC);
-        if (!$res) {
-            echo 'ERROR QUERY';
-            return 'ERROR';
-        } else {
-            return $res;
-            $res->close();
-            $this->_DB->close();
-        }
+        $apiUrl = 'http://localhost/api/todo/leer-terminada.php';
+        // Realiza la petición GET a la API y obtén la respuesta
+        $response = file_get_contents($apiUrl);
+        // Decodifica la respuesta JSON (si la API devuelve datos en formato JSON)
+        $data =  json_decode($response, true);
+        return json_decode($response, true)['records'];
     }
 
     public function edit($taskID, $taskTitle, $taskDescription, $taskStatus, $taskDueDate, $taskAssignee, $taskType)
     {
-        //echo "Entro a insert_new()";
-        $query = "UPDATE checklist
-                SET titulo = '$taskTitle', descripcion = '$taskDescription', estado = '$taskStatus', fecha = '$taskDueDate', responsable = '$taskAssignee', tipo_tarea = '$taskType', editado = 1
-                WHERE id = $taskID";
-        $consulta = $this->_DB->query($query);
-        // Ejecuta la consulta
-        if ($consulta) {
-            return true;
+        $apiUrl = 'http://localhost/api/todo/edit.php';
+        $postData = array(
+            'id'          => $taskID,
+            'titulo'      => $taskTitle,
+            "descripcion" => $taskDescription ,
+            "estado"      => $taskStatus ,
+            "fecha"       => $taskDueDate ,
+            "responsable" => $taskAssignee ,
+            "tipo_tarea"  => $taskType ,
+        );
+        
+        $jsonData = json_encode($postData);
+        // Inicializa cURL
+        $ch = curl_init($apiUrl);
+        
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        
+        // Configura los encabezados para indicar que estás enviando datos JSON
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        // Realiza la solicitud y obtén la respuesta
+        $response = curl_exec($ch);
+        
+        // Verifica si la solicitud fue exitosa
+        if ($response === false) {
+            echo 'Error en la solicitud cURL: ' . curl_error($ch);
         } else {
-            echo "Error: " . $query . "<br>" . $this->_DB->error;
-            return false; // Indica que hubo un error al ejecutar la consulta
+                   return true;
         }
+        
+        // Cierra la sesión cURL
+        curl_close($ch);
+        return true;
     }
 
     public function insert_new($taskTitle, $taskDescription, $taskStatus, $taskDueDate, $taskAssignee, $taskType)
     {
-        //echo "Entro a insert_new()";
-        $query = "INSERT INTO checklist (titulo, descripcion, estado, fecha, responsable, tipo_tarea) values ('$taskTitle', '$taskDescription', '$taskStatus', '$taskDueDate', '$taskAssignee', '$taskType')";
-        $consulta = $this->_DB->query($query);
-        // Ejecuta la consulta
-        if ($consulta) {
-            return true;
+        $apiUrl = 'http://localhost/api/todo/create.php';
+        $postData = array(
+            'titulo'      => $taskTitle,
+            "descripcion" => $taskDescription ,
+            "estado"      => $taskStatus ,
+            "fecha"       => $taskDueDate ,
+            "responsable" => $taskAssignee ,
+            "tipo_tarea"  => $taskType ,
+        );
+        
+        $jsonData = json_encode($postData);
+        $ch = curl_init($apiUrl);
+        
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        $response = curl_exec($ch);
+        
+        if ($response === false) {
+            echo 'Error en la solicitud cURL: ' . curl_error($ch);
         } else {
-            echo "Error: " . $query . "<br>" . $this->_DB->error;
-            return false; // Indica que hubo un error al ejecutar la consulta
+                   return true;
         }
+        
+        curl_close($ch);
+        return true;
     }
 
     public function delete($id)
     {
-        //echo "Entro a insert_new()";
-        $query = " DELETE FROM checklist WHERE id = $id;
-";
-        $consulta = $this->_DB->query($query);
-        // Ejecuta la consulta
-        if ($consulta) {
-            return true;
+        $apiUrl = 'http://localhost/api/todo/delete.php';
+        $postData = array(
+            'id'          => $id,
+
+        );
+        
+        $jsonData = json_encode($postData);
+        $ch = curl_init($apiUrl);
+        
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($jsonData)
+        ));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        $response = curl_exec($ch);
+
+        if ($response === false) {
+            echo 'Error en la solicitud cURL: ' . curl_error($ch);
         } else {
-            echo "Error: " . $query . "<br>" . $this->_DB->error;
-            return false; // Indica que hubo un error al ejecutar la consulta
+                   return true;
         }
+                curl_close($ch);
+        return true;
     }
 }
